@@ -1,0 +1,31 @@
+{% extends "homepage/base.html" %}
+{% block content %}
+<div>
+    <h2>{{post.tite}}</h2>
+    <p>{{post.created_date}}</p>
+    <p>{{post.text}}</p>
+    <a href="{% url 'edit' post.id %}">수정</a>
+    <a href="{% url 'delete' post.id %}">삭제</a>
+</div>
+        
+<hr>
+<p>댓글{{post.comments.count}}개</p>
+<div class="form-group">
+    <form method="POST" action="{%url 'add_comment' post.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">작성</button>
+    </form>
+</div>
+
+{% for comment in post.comments.all %}
+<div class>
+    <div>{{comment.created_date}}</div>
+    <strong>{{comment.nickname}}</strong>
+    {{comment.text|linebreaks}}
+    <a href="{% url 'comment_delete' comment_id=comment.id %}">댓글 삭제</a>
+</div>
+{%empty%}
+<p>아무 댓글이 없어요</p>
+{%endfor%}
+{% endblock %}

@@ -1,0 +1,17 @@
+{% load static %}
+<head>
+ <link rel="stylesheet" href="{% static 'css/style.css' %}">
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container" style="text-align:center; background-color: rgb(192, 213, 253)">
+    <h1 style="color:rgb(23, 64, 138);"><strong>오늘 영화..어떤 게 좋을까?</strong></h1>
+    <div style="float:right">
+            <a href="{% url 'new'%}" class="top-menu" style="color : black;">글쓰기</a>
+            <a href="{% url 'home'%}"  style="color : black;">홈으로</a>
+    </div>
+    <br>
+    <hr>
+    {% block content %}
+    {% endblock %}
+</body>
