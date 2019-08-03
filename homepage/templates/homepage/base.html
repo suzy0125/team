@@ -1,17 +1,84 @@
 {% load static %}
+
 <head>
- <link rel="stylesheet" href="{% static 'css/style.css' %}">
- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!-- 부가적인 테마 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: white;
+            font-family: 'Nanum Gothic', sans-serif;
+        }
+
+        #content {
+            height: 250px;
+            background-color: rgb(253, 64, 121);
+        }
+
+        #logo {
+            margin-top: 20px;
+            width: 200px;
+            height: 50px;
+            margin-left: 200px;
+        }
+
+        #topphoto {
+            width: 450px;
+            height: 250px;
+        }
+
+        #detail {
+            width: 400px;
+            height: 400px;
+            margin-left: 30%;
+        }
+        #container{
+            text-align: center;
+        }
+    </style>
 </head>
+
 <body>
-    <div class="container" style="text-align:center; background-color: rgb(192, 213, 253)">
-    <h1 style="color:rgb(23, 64, 138);"><strong>오늘 영화..어떤 게 좋을까?</strong></h1>
-    <div style="float:right">
-            <a href="{% url 'new'%}" class="top-menu" style="color : black;">글쓰기</a>
-            <a href="{% url 'home'%}"  style="color : black;">홈으로</a>
-    </div>
-    <br>
-    <hr>
-    {% block content %}
-    {% endblock %}
+    <!--상단-->
+    <div class="container-fluid" id="content">
+        <div class="row">{% load staticfiles %}
+            <div class="col-xs-2">
+                <a href="{% url 'home' %}"><img src="{% static "알고쓰자.png" %}" id="logo">
+            </div>
+            <div class="col-xs-4">
+                <a href="{% url 'home' %}"><img src="{% static "생리대1.png" %}" id="topphoto"></a>
+            </div>
+            <div class="col-xs-6" style="text-align: left">
+                <h2 style="margin-top: 10%; color: white;">홈페이지 설명 ?</h2>
+                <p style="color: white;">메뉴바?</p>
+                <br>
+                <br>
+                <br>
+                <div style="text-align: right;" id="login">
+                    {%if user.is_active%}
+                    <b>
+                        <p style="color: white;">{{user.username}}님 반갑습니다.
+                            <a href="{% url 'logout'%}">logout</a></p>
+                    </b>
+                    {%else%}
+                    <a href="{% url 'accounts:signup'%}" style="color: white;"> <b>signup</b></a>
+                    <a href="{% url 'login'%}" style="color: white;"><b>Login</b></a>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+        <!--아래내용-->
+        <div>
+            <br>
+            <div class="container" id="container">
+                <!--base까지-->
+                {% block content %}
+                {% endblock %}
+            </div>
 </body>

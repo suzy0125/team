@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post, Comment
 from django.utils import timezone
 from .forms import PostForm, CommentForm
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def home(request):
@@ -12,7 +13,7 @@ def detail(request, post_id):
     post_detail = get_object_or_404(Post, pk=post_id)
     form = CommentForm()
     return render(request, 'homepage/detail.html', {'post':post_detail, 'form':form})
-
+@login_required
 def post_new(request):
     if request.method == "POST":
         form = PostForm(request.POST)
