@@ -5,8 +5,10 @@ from django.utils import timezone
 
 class Post(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
+    brand = models.CharField(max_length=200, null=True)
+    title = models.CharField(max_length=200, null=True)
     text = models.TextField()
+    component = models.TextField(null=True)
     published_date = models.DateTimeField(blank=True, null = True)
     photo = models.ImageField(blank=True, null=True)
     

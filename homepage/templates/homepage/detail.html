@@ -1,4 +1,5 @@
 {% load static %}
+{% load staticfiles %}
 
 <head>
     <!-- 합쳐지고 최소화된 최신 CSS -->
@@ -44,7 +45,7 @@
 <body>
     <!--상단-->
     <div class="container-fluid" id="content">
-        <div class="row">{% load staticfiles %}
+        <div class="row">
             <div class="col-xs-2">
                 <a href="{% url 'home' %}"><img src="{% static "알고쓰자.png" %}" id="logo">
             </div>
@@ -75,61 +76,59 @@
             <br>
             <div class="container">
                 <!--base까지-->
-                {% block content %}
-                {% endblock %}
-            </div>
-</body>
-<div class="row">
-       
-        <div class="col-xs-4">
-          <img src="http://www.ykbrand.co.kr/data/Real/20181101015057_b410e06e96214e968d9fba9fc3fad5ba.png" id="detail">
-        </div>
-        <div class="col-xs-8" style="text-align: left; padding-left: 20%; margin-top: 10%">
-          <h3><b>좋은느낌</b></h3>
-          <hr>
-          <h2><b>유기농 순면커버</b></h2>
-        </div>
-      </div>
-      <h3><b>상세설명</b></h3>
-      <hr>
-      <p>제품사양:</p>
-      <p>제조국</p>
-      <p>길이:</p>
-      <p>넓이:</p>
-      <p>재질:</p>
-      <p>향:</p>
-      <br>
-      <h3><b>성분분석</b></h3>
-      <hr>
-      <p>순면부직포(면섬유:표지), 부직포(폴리에틸랜폴리프로필렌복합섬유: 표지(사이드),흡수체),
-        부직포CA(면상펄프,펄프,폴리에탈렌폴리프로필렌복합섬유,스티렌블록공중합체,탄화수소수지,파라핀계탄화수소:흡수체), 부직포(면상펄프,폴리에틸렌폴리프로필렌복합섬유,올레핀중합체:흡수체),
-        부직포(면상펄프,펄프:흡수체), 폴리에틸렌필름NB(폴리에틸렌,산화티탄:방수층), 열용융형접착제C, 열용융형접착제G(스티렌블록공중합체,탄화수소수지,파라핀계탄화수소:접착제)</p>
-      <br>
-      <a href="{% url 'edit' post.id %}">수정</a>
-      <a href="{% url 'delete' post.id %}">삭제</a>
-      <h3><b>고객후기</b></h3>
-      <hr>
-    </div>
-  </div>
-  </div>
-</body>        
-<hr>
-<p>댓글{{post.comments.count}}개</p>
-<div class="form-group">
-    <form method="POST" action="{%url 'add_comment' post.id %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">작성</button>
-    </form>
-</div>
+                <div class="row">
 
-{% for comment in post.comments.all %}
-<div class>
-    <div>{{comment.created_date}}</div>
-    <strong>{{comment.nickname}}</strong>
-    {{comment.text|linebreaks}}
-    <a href="{% url 'comment_delete' comment_id=comment.id %}">댓글 삭제</a>
-</div>
-{%empty%}
-<p>아무 댓글이 없어요</p>
-{%endfor%}
+                    <div class="col-xs-4">
+                        <img src="http://www.ykbrand.co.kr/data/Real/20181101015057_b410e06e96214e968d9fba9fc3fad5ba.png"
+                            id="detail">
+                    </div>
+                    <div class="col-xs-8" style="text-align: left; padding-left: 20%; margin-top: 10%">
+                        <h3><b>{{post.brand}}</b></h3>
+                        <hr>
+                        <h2><b>{{post.title}}</b></h2>
+                    </div>
+                </div>
+                <h3><b>상세설명</b></h3>
+                <hr>
+                <p>{{post.text}}</p>
+                <br>
+                <h3><b>성분분석</b></h3>
+                <hr>
+                <p>{{post.component}}</p>
+                <br>
+                <div style="text-align: right">
+                    <a href="{% url 'edit' post.id %}">수정</a>
+                    <a href="{% url 'delete' post.id %}">삭제</a>
+                </div>
+                <h3><b>고객후기</b></h3>
+                <hr>
+                <div class="panel-footer" style="text-align: center">
+                    <hr>
+                    {% for comment in post.comments.all %}
+                    <div class="row">
+                        <div class="col-9" style="text-align:left">
+                            <strong>{{user.username}}</strong>
+                            {{comment.text|linebreaks}}</div>
+                        <div class="col-3"><a href="{% url 'delete_comment' comment_id=comment.id %}">댓글삭제</a></div>
+                    </div>
+                    {%empty%}
+                    <p>댓글이 없습니다.</p>
+                    {%endfor%}
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-9">
+                                <form method="POST" action="{% url 'add_comment' post.id%}">
+                                    {% csrf_token %}
+                                    {{form.as_table}}
+                            </div>
+                            <div class="col-3">
+                                <button type="submit" class="save btn btn-default">작성</button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

@@ -1,4 +1,5 @@
 {% load static %}
+{% load staticfiles %}
 
 <head>
     <!-- 합쳐지고 최소화된 최신 CSS -->
@@ -38,7 +39,8 @@
             height: 400px;
             margin-left: 30%;
         }
-        #container{
+
+        #container {
             text-align: center;
         }
     </style>
@@ -47,7 +49,7 @@
 <body>
     <!--상단-->
     <div class="container-fluid" id="content">
-        <div class="row">{% load staticfiles %}
+        <div class="row">
             <div class="col-xs-2">
                 <a href="{% url 'home' %}"><img src="{% static "알고쓰자.png" %}" id="logo">
             </div>

@@ -1,7 +1,21 @@
-{% extends "homepage/base.html" %}
-{% block content %}
+{%extends "homepage/base.html"%}
+{%block content%}
+<a href="{% url 'new'%}" style=" color: rgb(96, 3, 96); float: right;">글쓰기</a>
+<br>
+<div class="row">
+    {%for post in posts.all%}
+    <div class="col-md-4">
+        <div class="card mb-4 shadow-sm" style="border-radius: 10px">
+            <a href="{% url 'detail' post.id %}"><img src="{{post.image.url}}" height="300" width="100%" ></img></a>
+            <div class="card-body">
+                <h3 class="card-text" style="text-align: center;"><a href="{% url 'detail' post.id %}">{{post.title}}</a>
+                </h3>
+                <p>{{post.author}}</p>
+                <small class="text-muted">{{post.created_date}}</small>
+            </div>
+        </div>
+    </div>
+</body>
+    {%endfor%}
 
-
-
-
-{% endblock %}
+{%endblock%}
